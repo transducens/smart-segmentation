@@ -12,16 +12,22 @@ local ONLYVOC=$5
 local AP=$6
 local APL="$7"
 local FURTHERSEGMENT="$8"
+local HUCKSEGMENT="$9"
 
-cat $C | perl $CURDIR/lowercase.perl | tee $C.lower  | tr ' ' '\n' | LC_ALL=C sort | LC_ALL=C uniq -c | sed 's:^[ ]*::' > $VOC 
+cat $C | perl $CURDIR/lowercase.perl | tee $C.lower  | tr ' ' '\n' | LC_ALL=C sort | LC_ALL=C uniq -c | sed 's:^[ ]*::' > $VOC
 
 if [ "$ONLYVOC" == ""  ]; then
 
 if [ "$AP" == ""  ]; then
 	cat $VOC |  cut -f 2 -d ' '  |  hunspell -d $L -m | LC_ALL=C sort -u | (egrep -v '^[[:space:]]*$' || :) |  (grep -F ' ' || :) | sed -r 's:[ ]+: :g' | LC_ALL=C sort  -t ' ' -k1,1 |  sed "s: :\t:"   > $OUT
 else
-	cat $VOC |  cut -f 2 -d ' ' | apertium -d $AP ${APL}-morph > $VOC.apertium
+	if [ $HUCKSEGMENT != "" ]; then
+		  #Segment words by suffix splitting
+			cat $VOC |  cut -f 2 -d ' ' | python $CURDIR/huck-segment.py > $OUT
+	else
+	      cat $VOC |  cut -f 2 -d ' ' | apertium -d $AP ${APL}-morph > $VOC.apertium
         cat $VOC |  cut -f 2 -d ' ' | paste -  $VOC.apertium | python3 $CURDIR/apertium-analysis-to-hunspell.py $FURTHERSEGMENT > $OUT
+	fi
 fi
 
 fi

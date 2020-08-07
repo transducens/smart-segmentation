@@ -13,6 +13,7 @@ DEFINE_string 'language' '' 'Language of the corpus to be segmented' 'l'
 DEFINE_string 'dictionary' '' 'Path to custom Hunspell dictionary' 'd'
 DEFINE_string 'analyze_apertium' '' 'Path to Apertium data dir if we want to analyze with apertium' 'a'
 DEFINE_string 'subsuffixes' '' 'File with instructions about how to split Apertium suffixes' 's'
+DEFINE_boolean 'analyze_huck' false 'Analyze with a predefined set of suffixes' 'u'
 
 FLAGS "$@" || exit $?
 eval set -- "${FLAGS_ARGV}"
@@ -31,10 +32,15 @@ if [ "${FLAGS_dictionary}" != ""  ]; then
 	D="${FLAGS_dictionary}"
 fi
 
+ANALYZE_HUCK=""
+if [ "${FLAGS_analyze_huck}" == "${FLAGS_TRUE}"  ]; then
+  ANALYZE_HUCK="true"
+fi
+
 mkdir -p $O
 
 #Analyze training corpus
-analyze_corpus $D $C  $O/voc $O/training.analyzed "" "$AP" "$L" "${FLAGS_subsuffixes}"
+analyze_corpus $D $C  $O/voc $O/training.analyzed "" "$AP" "$L" "${FLAGS_subsuffixes}" "$ANALYZE_HUCK"
 
 
 #Train morfessor model
