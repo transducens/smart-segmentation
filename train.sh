@@ -42,7 +42,7 @@ mkdir -p $O
 #Analyze training corpus
 # If suffix splitting is enabled ($ANALYZE_HUCK), the corpus is not analyzed, as it
 # only needs to be analyzed at splitting time (not at training)
-analyze_corpus $D $C  $O/voc $O/training.analyzed "" "$AP" "$L" "${FLAGS_subsuffixes}" ""
+analyze_corpus $D $C  $O/voc $O/training.analyzed "" "$AP" "$L" "${FLAGS_subsuffixes}" "$ANALYZE_HUCK"
 
 #Train morfessor model
 if [ "$ANALYZE_HUCK" != "true" ]; then

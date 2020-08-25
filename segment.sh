@@ -44,11 +44,11 @@ fi
 WORKDIR=$(mktemp -d)
 
 if [ "${FLAGS_disable_dictionary}" == "${FLAGS_TRUE}"  ]; then
-analyze_corpus "" $C $WORKDIR/voc $WORKDIR/test.analyzed "onlyvoc" "" "" ""
+analyze_corpus "" $C $WORKDIR/voc $WORKDIR/test.analyzed "onlyvoc" "" "" "" ""
 touch $WORKDIR/test.analyzed
 else
 #Analyze test corpus
-analyze_corpus $D $C $WORKDIR/voc $WORKDIR/test.analyzed "" "$AP" "$L"  "${FLAGS_subsuffixes}"
+analyze_corpus $D $C $WORKDIR/voc $WORKDIR/test.analyzed "" "$AP" "$L"  "${FLAGS_subsuffixes}" ""
 fi
 
 if [ -f "$M/morfessormodel-v2" ]; then
