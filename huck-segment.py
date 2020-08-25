@@ -5,9 +5,9 @@ SUF=["e","em","en","end","enheit", "enlich","er","erheit","erlich","ern","es","e
 for line in sys.stdin:
     w=line.rstrip("\n")
     segs=set()
-    cands=[(w,[])]
+    initialcand=(w,[])
+    cands=[initialcand]
     finalsegs=[]
-    finalsegs.append(cands[0])
     while len(cands) > 0:
         stem,sfs=cands[0]
         cands=cands[1:]
@@ -18,6 +18,8 @@ for line in sys.stdin:
         if len(sfs) > 0:
             finalsegs.append((stem,sfs))
     #Print
+    if len(finalsegs) > 0:
+        finalsegs.append(initialcand)
     for stem, sfs in finalsegs:
         fullform="".join([stem]+sfs)
         print("{}\t{}".format(fullform,  " ".join(  [ "st:"+stem ] + [ "sf:"+sf+":0" for sf in sfs  ]  )  ))
