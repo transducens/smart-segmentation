@@ -42,16 +42,14 @@ mkdir -p $O
 #Analyze training corpus
 # If suffix splitting is enabled ($ANALYZE_HUCK), the corpus is not analyzed, as it
 # only needs to be analyzed at splitting time (not at training)
-analyze_corpus $D $C  $O/voc $O/training.analyzed "$ANALYZE_HUCK" "$AP" "$L" "${FLAGS_subsuffixes}" ""
-
+analyze_corpus $D $C  $O/voc $O/training.analyzed "" "$AP" "$L" "${FLAGS_subsuffixes}" ""
 
 #Train morfessor model
-GOLDFLAG=""
-if [ -f "$O/training.analyzed" ]; then
+if [ "$ANALYZE_HUCK" != "true" ]; then
   python3 $CURDIR/hunspell_to_morfessor_segmentation.py < $O/training.analyzed > $O/training.analyzed.tomorfessor
   GOLDFLAG="-A $O/training.analyzed.tomorfessor"
 fi
 PATH="$HOME/.local/bin:$PATH" morfessor-train -s $O/morfessormodel $GOLDFLAG $C.lower
 
-#Write suffixes
+
 python3 $CURDIR/extract-suffixes.py < $O/training.analyzed > $O/suffixes
