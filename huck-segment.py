@@ -7,6 +7,7 @@ for line in sys.stdin:
     segs=set()
     cands=[(w,[])]
     finalsegs=[]
+    finalsegs.append(cands[0])
     while len(cands) > 0:
         stem,sfs=cands[0]
         cands=cands[1:]
