@@ -1,6 +1,7 @@
 import sys
 from collections import defaultdict
 
+SUFL={}
 #Huck et al.'s paper
 SUFL["de"]=["e","em","en","end","enheit", "enlich","er","erheit","erlich","ern","es","est","heit","ig","igend","igkeit","igung","ik","isch","keit","lich","lichkeit","s","se","sen","ses","st","ung"]
 #NLTK Snowball stemmer

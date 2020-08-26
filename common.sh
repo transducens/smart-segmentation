@@ -24,7 +24,7 @@ if [ "$ONLYVOC" == ""  ]; then
 if [ "$AP" == ""  ]; then
         if [ $HUCKSEGMENT != "" ]; then
            #Segment words by suffix splitting
-           cat $VOC |  cut -f 2 -d ' ' | python $CURDIR/huck-segment.py $L  > $OUT
+           cat $VOC |  cut -f 2 -d ' ' | python $CURDIR/huck-segment.py $APL  > $OUT
        else
 
 	cat $VOC |  cut -f 2 -d ' '  |  hunspell -d $L -m | LC_ALL=C sort -u | (egrep -v '^[[:space:]]*$' || :) |  (grep -F ' ' || :) | sed -r 's:[ ]+: :g' | LC_ALL=C sort  -t ' ' -k1,1 |  sed "s: :\t:"   > $OUT
