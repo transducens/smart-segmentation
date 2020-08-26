@@ -193,16 +193,17 @@ SUFL["cs"]=["atech","ětem","atům","ech", "ich", "ích", "ého", "ěmi", "emi",
                          "c","č","k","l","n","t"]
 
 #From https://en.wikipedia.org/wiki/Turkish_grammar
-#TODO: review me
-SUFL["tr"]=[ "ler", "lar", "mek", "me", "iş", "yiş", "m", "im", "miz", "imiz", "n", "in", "niz" , "iniz", "i", "si", "leri",
+SUFL["tr"]=[ "ler", "lar", #PLural
+"mek", "me", "iş", "yiş", #Verbal nouns
+"m", "im", "miz", "imiz", "n", "in", "niz" , "iniz", "i", "si", "leri",
 "yim", "yiz", "iz", "sin", "siniz", "ler",  "k", "yeyim", "eyim", "yelim", "elim", "yesin","esin", "yesiniz", "esiniz", "ye", "e","yeler", "eler",
-"yiniz","sin","sinler",
-"mekte", "meli", "ir", "er", "mez", "emez", "yemez", "ecek", "yecek", "miş", "iyor", "di", "se" ,
-"yen","en","dik",
+"yiniz","sin","sinler", #Indicators of person
+"mekte", "meli", "ir", "er", "mez", "emez", "yemez", "ecek", "yecek", "miş", "iyor", "di", "se" , #Verbs
+"yen","en","dik", #PArticipal endings
 "yı","ı", "yi","i", "yu", "u", "yü" ,"ü",
-"ya", "ye", "a", "e","da", "de", "ta", "te","dan", "den", "tan", "ten","nın","ın", "nin", "in", "nun", "un", "nün", "ün"
+"ya", "ye", "a", "e","da", "de", "ta", "te","dan", "den", "tan", "ten","nın","ın", "nin", "in", "nun", "un", "nün", "ün", #Case
 "yim", "im", "sin", "yiz", "iz", "siniz", "ler",
-"le", "in", "n", "iş", "ş", "t", "dir", "ir", "er", "it", "il",
+"le", "in", "n", "iş", "ş", "t", "dir", "ir", "er", "it", "il" , "uş", "un", "dür","tır", #Voices
 "mekte", "meli","me", "mez", "ymiş", "ydi", "yse"
 ]
 
