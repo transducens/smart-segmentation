@@ -17,6 +17,7 @@ DEFINE_boolean 'disable_dictionary' false 'Disable dictionary and use only suffi
 DEFINE_boolean 'longest_suffix' false 'In case of ambiguity, choose always the longest suffix' 'L'
 DEFINE_string 'analyze_apertium' '' 'Path to Apertium data dir if we want to analyze with apertium' 'a'
 DEFINE_string 'subsuffixes' '' 'File with instructions about how to split Apertium suffixes' 's'
+DEFINE_boolean 'stemmer_split' false 'Split suffixes with NLTK stemmer' 'N'
 
 FLAGS "$@" || exit $?
 eval set -- "${FLAGS_ARGV}"
@@ -43,7 +44,7 @@ fi
 
 WORKDIR=$(mktemp -d)
 
-if [ "${FLAGS_disable_dictionary}" == "${FLAGS_TRUE}"  ]; then
+if [ "${FLAGS_disable_dictionary}" == "${FLAGS_TRUE}" -o "${FLAGS_stemmer_split}" == "${FLAGS_TRUE}" ]; then
 analyze_corpus "" $C $WORKDIR/voc $WORKDIR/test.analyzed "onlyvoc" "" "" "" ""
 touch $WORKDIR/test.analyzed
 else
@@ -65,8 +66,12 @@ if [ -f "$M/stopwords" ]; then
 	STOPWORDSFLAG="--stopwords $M/stopwords"
 fi
 
-#Extract splitting dictionary
-python3 $CURDIR/infer-splitting-dictionary.py $STOPWORDSFLAG  $MORFESSORFLAG  --suffixes $M/suffixes --analyzed_words $WORKDIR/test.analyzed --vocabulary $WORKDIR/voc > $WORKDIR/splitting-dictionary
+if [ "${FLAGS_stemmer_split}" == "${FLAGS_FALSE}" ]; then
+   #Extract splitting dictionary
+   python3 $CURDIR/infer-splitting-dictionary.py $STOPWORDSFLAG  $MORFESSORFLAG  --suffixes $M/suffixes --analyzed_words $WORKDIR/test.analyzed --vocabulary $WORKDIR/voc > $WORKDIR/splitting-dictionary
+else
+   python3 $CURDIR/infer-splitting-dictionary-nltk.py --vocabulary $WORKDIR/voc --language $L  > $WORKDIR/splitting-dictionary
+fi
 
 python3 $CURDIR/segment.py --dictionary $WORKDIR/splitting-dictionary < $C
 
